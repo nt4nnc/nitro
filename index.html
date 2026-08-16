@@ -33,12 +33,23 @@
       }
     }
 
-    /* Target panels/cards and make them 70% transparent (30% opaque) */
+    /* Target panels/cards: 80% transparent background (0.2 opacity) & forced white text */
     #list-container .card, 
     #list-container .panel, 
-    #list-container > div {
-      background-color: rgba(33, 37, 41, 0.7) !important; /* Bootstrap dark background with 70% opacity */
-      backdrop-filter: blur(4px); /* Optional: adds a nice blur effect behind the panels */
+    #list-container > div,
+    #leaderboard-container .card,
+    #leaderboard-container .panel,
+    #leaderboard-container > div {
+      background-color: rgba(33, 37, 41, 0.2) !important; /* 80% transparent dark bg */
+      color: #ffffff !important; /* Forces all primary text to white */
+      border: 1px solid rgba(255, 255, 255, 0.15) !important; /* Subtle border for visibility */
+      backdrop-filter: blur(4px); /* Adds a soft glass blur behind text */
+    }
+
+    /* Force any nested headings, paragraphs, or links inside panels to remain white */
+    #list-container *,
+    #leaderboard-container * {
+      color: #ffffff !important;
     }
   </style>
 </head>
