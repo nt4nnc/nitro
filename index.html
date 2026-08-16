@@ -19,7 +19,7 @@
 
     .soggy-img {
       position: absolute;
-      width: 90px; /* Adjust size of soggy.jpg as needed */
+      width: 126px; /* Scaled up 1.4x from 90px */
       height: auto;
       animation: floatAndRotate linear infinite;
     }
@@ -31,6 +31,14 @@
       100% {
         transform: translate(var(--move-x), var(--move-y)) rotate(360deg);
       }
+    }
+
+    /* Target panels/cards and make them 70% transparent (30% opaque) */
+    #list-container .card, 
+    #list-container .panel, 
+    #list-container > div {
+      background-color: rgba(33, 37, 41, 0.7) !important; /* Bootstrap dark background with 70% opacity */
+      backdrop-filter: blur(4px); /* Optional: adds a nice blur effect behind the panels */
     }
   </style>
 </head>
@@ -72,8 +80,8 @@
       img.style.opacity = opacity;
 
       // Random movement paths
-      const moveX = (Math.random() - 0.5) * 1000 + 'px';
-      const moveY = (Math.random() - 0.5) * 1000 + 'px';
+      const moveX = (Math.random() - 0.5) * 1200 + 'px';
+      const moveY = (Math.random() - 0.5) * 1200 + 'px';
       img.style.setProperty('--move-x', moveX);
       img.style.setProperty('--move-y', moveY);
 
@@ -84,8 +92,8 @@
       container.appendChild(img);
     }
 
-    // Spawns 10 soggy images into the background
-    for (let i = 0; i < 10; i++) {
+    // Spawns 20 soggy images into the background
+    for (let i = 0; i < 20; i++) {
       spawnSoggy();
     }
   </script>
