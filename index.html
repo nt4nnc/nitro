@@ -2,14 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GDPS / Layout List</title>
+  <title>GD Layout List & Leaderboards</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Fixed container behind all content */
+    #soggy-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none; /* Allows clicking through images to the list */
+      overflow: hidden;
+      z-index: -1; /* Keeps images behind text and cards */
+    }
+
+    .soggy-img {
+      position: absolute;
+      width: 90px; /* Adjust size of soggy.jpg as needed */
+      height: auto;
+      animation: floatAndRotate linear infinite;
+    }
+
+    @keyframes floatAndRotate {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      100% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(360deg);
+      }
+    }
+  </style>
 </head>
 <body class="bg-dark text-white">
+
+  <!-- Background layer for flying soggies -->
+  <div id="soggy-container"></div>
+
   <div class="container my-4">
-    <h1 class="text-center mb-4">GDPS Layout List</h1>
-    <div id="list-container" class="text-dark"></div>
+    
+    <h1 class="text-center mb-4">GD Layout List</h1>
+    <div id="list-container"></div>
+
+    <hr class="my-5">
+
+    <h2 class="text-center mb-4">Player Leaderboards</h2>
+    <div id="leaderboard-container"></div>
+
   </div>
+
   <script src="js/list.js"></script>
+
+  <!-- Script to spawn floating soggy images with random transparency -->
+  <script>
+    function spawnSoggy() {
+      const container = document.getElementById('soggy-container');
+      const img = document.createElement('img');
+      img.src = 'soggy.jpg';
+      img.classList.add('soggy-img');
+
+      // Random starting coordinates
+      const startX = Math.random() * window.innerWidth;
+      const startY = Math.random() * window.innerHeight;
+      img.style.left = `${startX}px`;
+      img.style.top = `${startY}px`;
+
+      // Random transparency between 0.20 and 0.70 (20% - 70%)
+      const opacity = (Math.random() * (0.70 - 0.20) + 0.20).toFixed(2);
+      img.style.opacity = opacity;
+
+      // Random movement paths
+      const moveX = (Math.random() - 0.5) * 1000 + 'px';
+      const moveY = (Math.random() - 0.5) * 1000 + 'px';
+      img.style.setProperty('--move-x', moveX);
+      img.style.setProperty('--move-y', moveY);
+
+      // Random speed (between 6s and 14s duration)
+      const duration = Math.random() * 8 + 6;
+      img.style.animationDuration = `${duration}s`;
+
+      container.appendChild(img);
+    }
+
+    // Spawns 10 soggy images into the background
+    for (let i = 0; i < 10; i++) {
+      spawnSoggy();
+    }
+  </script>
 </body>
 </html>
