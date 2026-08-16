@@ -1,4 +1,4 @@
-// Point allocation per position
+// Point allocation formula per level ranking
 function getPointsForPosition(position) {
   const pointScale = {
     1: 100,
@@ -7,31 +7,35 @@ function getPointsForPosition(position) {
     4: 35,
     5: 25
   };
-  return pointScale[position] || 10; // Default 10 points for position 6+
+  return pointScale[position] || 10;
 }
 
 async function loadListData() {
   try {
+    // Relative fetch directly targeting root directory
     const response = await fetch('./list.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
     const levels = await response.json();
 
     renderList(levels);
     renderLeaderboard(levels);
   } catch (err) {
-    console.error("Error loading level data:", err);
+    console.error("Error loading list data:", err);
+    document.getElementById('list-container').innerHTML = 
+      `<div class="alert alert-danger">Failed to load level list data (${err.message}). Check console or list.json file path.</div>`;
   }
 }
 
-// Render level list panels
 function renderList(levels) {
   const container = document.getElementById('list-container');
   container.innerHTML = '';
 
-  levels.forEach((level, index) => {
+  levels.forEach((level) => {
     const points = getPointsForPosition(level.position);
     const modalId = `modal-${level.id}`;
 
-    // Build modal record list
     let recordsHTML = '<p class="text-muted">No records submitted yet.</p>';
     if (level.records && level.records.length > 0) {
       recordsHTML = '<ul class="list-group list-group-flush">';
@@ -89,7 +93,6 @@ function renderList(levels) {
   });
 }
 
-// Compute & render player leaderboards based on records and verifications
 function renderLeaderboard(levels) {
   const leaderboardContainer = document.getElementById('leaderboard-container');
   const players = {};
@@ -97,30 +100,27 @@ function renderLeaderboard(levels) {
   levels.forEach(level => {
     const points = getPointsForPosition(level.position);
 
-    // Process record completions
-    level.records.forEach(record => {
-      if (!players[record.user]) {
-        players[record.user] = { points: 0, completions: 0, verifications: 0 };
-      }
-      if (record.percent === 100) {
-        players[record.user].points += points;
-        players[record.user].completions += 1;
-      }
-    });
-
-    // Process verifier (if not already counted in records)
-    if (level.verifier) {
-      if (!players[level.verifier]) {
-        players[level.verifier] = { points: 0, completions: 0, verifications: 0 };
-      }
-      players[level.verifier].verifications += 1;
+    if (level.records) {
+      level.records.forEach(record => {
+        if (!players[record.user]) {
+          players[record.user] = { points: 0, completions: 0 };
+        }
+        if (record.percent === 100) {
+          players[record.user].points += points;
+          players[record.user].completions += 1;
+        }
+      });
     }
   });
 
-  // Sort players by total points descending
   const sortedPlayers = Object.keys(players)
     .map(name => ({ name, ...players[name] }))
     .sort((a, b) => b.points - a.points);
+
+  if (sortedPlayers.length === 0) {
+    leaderboardContainer.innerHTML = '<p class="text-center text-muted">No records available for leaderboards.</p>';
+    return;
+  }
 
   let leaderboardHTML = `
     <table class="table table-transparent text-white">
