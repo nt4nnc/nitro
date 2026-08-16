@@ -1,4 +1,3 @@
-// Point allocation formula per level ranking
 function getPointsForPosition(position) {
   const pointScale = {
     1: 100,
@@ -12,7 +11,6 @@ function getPointsForPosition(position) {
 
 async function loadListData() {
   try {
-    // Corrected path targeting the data subfolder
     const response = await fetch('data/levels.json');
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -32,11 +30,14 @@ function renderList(levels) {
   const container = document.getElementById('list-container');
   container.innerHTML = '';
 
+  // Remove any previously appended modals from document.body to avoid duplicates
+  document.querySelectorAll('.custom-modal-wrapper').forEach(el => el.remove());
+
   levels.forEach((level) => {
     const points = getPointsForPosition(level.position);
     const modalId = `modal-${level.id}`;
 
-    let recordsHTML = '<p class="text-muted">No records submitted yet.</p>';
+    let recordsHTML = '<p class="text-muted mb-0">No records submitted yet.</p>';
     if (level.records && level.records.length > 0) {
       recordsHTML = '<ul class="list-group list-group-flush">';
       level.records.forEach(r => {
@@ -45,12 +46,13 @@ function renderList(levels) {
             <div>
               <strong>${r.user}</strong> (${r.percent}% - ${r.hz})
             </div>
-            <a href="${r.link}" target="_blank" class="btn btn-sm btn-outline-primary">Proof</a>
+            <a href="${r.link}" target="_blank" class="btn btn-sm btn-primary">Proof</a>
           </li>`;
       });
       recordsHTML += '</ul>';
     }
 
+    // 1. Render Card Panel
     const card = document.createElement('div');
     card.className = 'card mb-3 p-3';
     card.innerHTML = `
@@ -72,8 +74,13 @@ function renderList(levels) {
           </div>
         </div>
       </div>
+    `;
+    container.appendChild(card);
 
-      <!-- Modal -->
+    // 2. Render Modal DIRECTLY to document.body (prevents stacking context/backdrop lockup)
+    const modalDiv = document.createElement('div');
+    modalDiv.className = 'custom-modal-wrapper';
+    modalDiv.innerHTML = `
       <div class="modal fade" id="${modalId}" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -84,12 +91,14 @@ function renderList(levels) {
             <div class="modal-body">
               ${recordsHTML}
             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
       </div>
     `;
-
-    container.appendChild(card);
+    document.body.appendChild(modalDiv);
   });
 }
 
@@ -100,7 +109,6 @@ function renderLeaderboard(levels) {
   levels.forEach(level => {
     const points = getPointsForPosition(level.position);
 
-    // Process user completions from records array
     if (level.records) {
       level.records.forEach(record => {
         if (!players[record.user]) {
@@ -113,7 +121,6 @@ function renderLeaderboard(levels) {
       });
     }
 
-    // Process verifier credit (if verifier isn't already logged in records)
     if (level.verifier) {
       const alreadyHasRecord = level.records && level.records.some(r => r.user === level.verifier && r.percent === 100);
       if (!alreadyHasRecord) {
@@ -131,12 +138,12 @@ function renderLeaderboard(levels) {
     .sort((a, b) => b.points - a.points);
 
   if (sortedPlayers.length === 0) {
-    leaderboardContainer.innerHTML = '<p class="text-center text-muted">No records available for leaderboards.</p>';
+    leaderboardContainer.innerHTML = '<p class="text-center text-muted mb-0">No records available for leaderboards.</p>';
     return;
   }
 
   let leaderboardHTML = `
-    <table class="table table-transparent text-white">
+    <table class="table table-hover mb-0">
       <thead>
         <tr>
           <th>#</th>
