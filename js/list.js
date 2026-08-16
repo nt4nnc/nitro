@@ -12,7 +12,7 @@ function getPointsForPosition(position) {
 
 async function loadListData() {
   try {
-    const response = await fetch('data/list.json');
+    const response = await fetch('./list.json');
     const levels = await response.json();
 
     renderList(levels);
