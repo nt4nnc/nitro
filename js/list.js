@@ -12,8 +12,8 @@ function getPointsForPosition(position) {
 
 async function loadListData() {
   try {
-    // Relative fetch directly targeting root directory
-    const response = await fetch('./list.json');
+    // Corrected path targeting the data subfolder
+    const response = await fetch('data/levels.json');
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -24,7 +24,7 @@ async function loadListData() {
   } catch (err) {
     console.error("Error loading list data:", err);
     document.getElementById('list-container').innerHTML = 
-      `<div class="alert alert-danger">Failed to load level list data (${err.message}). Check console or list.json file path.</div>`;
+      `<div class="alert alert-danger">Failed to load level list data (${err.message}). Check data/levels.json file path.</div>`;
   }
 }
 
@@ -67,7 +67,7 @@ function renderList(levels) {
             <p class="card-text mb-1"><small>Level ID: ${level.id} | <strong>${points} Points</strong></small></p>
             
             <button class="btn btn-primary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#${modalId}">
-              View Records (${level.records.length})
+              View Records (${level.records ? level.records.length : 0})
             </button>
           </div>
         </div>
@@ -100,6 +100,7 @@ function renderLeaderboard(levels) {
   levels.forEach(level => {
     const points = getPointsForPosition(level.position);
 
+    // Process user completions from records array
     if (level.records) {
       level.records.forEach(record => {
         if (!players[record.user]) {
@@ -110,6 +111,18 @@ function renderLeaderboard(levels) {
           players[record.user].completions += 1;
         }
       });
+    }
+
+    // Process verifier credit (if verifier isn't already logged in records)
+    if (level.verifier) {
+      const alreadyHasRecord = level.records && level.records.some(r => r.user === level.verifier && r.percent === 100);
+      if (!alreadyHasRecord) {
+        if (!players[level.verifier]) {
+          players[level.verifier] = { points: 0, completions: 0 };
+        }
+        players[level.verifier].points += points;
+        players[level.verifier].completions += 1;
+      }
     }
   });
 
