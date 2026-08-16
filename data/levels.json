@@ -5,7 +5,7 @@
     "author": "NT",
     "verifier": "NT",
     "id": "118",
-    "youtube": "https://youtu.be/EkJF9EZc598",
+    "youtube": "https://www.youtube.com/embed/EkJF9EZc598",
     "records": [
       {
         "user": "NT",
@@ -14,5 +14,30 @@
         "link": "https://youtu.be/EkJF9EZc598"
       }
     ]
+  },
+  {
+    "position": 2,
+    "name": "Figures",
+    "author": "HelloEJ100",
+    "verifier": "Wousher",
+    "id": "117",
+    "youtube": "https://youtu.be/_evVHRVCFeg",
+    "records": [
+      {
+        "user": "Wousher",
+        "percent": 100,
+        "hz": "120Hz",
+        "link": "https://youtu.be/_evVHRVCFeg"
+      }
+    ]
+  },
+  {
+    "position": 3,
+    "name": "Placeholderlol",
+    "author": "Riot",
+    "verifier": "Zoink",
+    "id": "120",
+    "youtube": "https://www.youtube.com/embed/EXAMPLE_ID_3",
+    "records": []
   }
 ]
