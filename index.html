@@ -4,19 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GD Layout List & Leaderboards</title>
+  
+  <!-- Fonts & Bootstrap 5 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
   <style>
-    /* Full-screen stretched background */
+    :root {
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Outfit', sans-serif;
+      --accent-cyan: #00f2fe;
+      --accent-purple: #4facfe;
+      --glass-bg: rgba(18, 22, 31, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-glow: rgba(79, 172, 254, 0.25);
+    }
+
     body {
-      background-image: url('background.png');
+      font-family: var(--font-body);
+      background-image: radial-gradient(circle at 50% 0%, rgba(15, 23, 42, 0.7), rgba(10, 10, 15, 0.95)), url('background.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
       min-height: 100vh;
+      color: #f8fafc;
+      overflow-x: hidden;
     }
 
-    /* Fixed container behind content for floating soggies */
+    /* Fixed container for floating soggies */
     #soggy-container {
       position: fixed;
       top: 0;
@@ -25,39 +43,91 @@
       height: 100vh;
       pointer-events: none;
       overflow: hidden;
-      z-index: -1;
+      z-index: 0;
     }
 
     .soggy-img {
       position: absolute;
       width: 126px;
       height: auto;
+      border-radius: 12px;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
       animation: floatAndRotate linear infinite;
+      will-change: transform;
     }
 
     @keyframes floatAndRotate {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      100% { transform: translate(var(--move-x), var(--move-y)) rotate(360deg); }
+      0% { 
+        transform: translate(0, 0) rotate(0deg) scale(0.95); 
+      }
+      50% {
+        transform: translate(calc(var(--move-x) * 0.5), calc(var(--move-y) * 0.5)) rotate(180deg) scale(1.05);
+      }
+      100% { 
+        transform: translate(var(--move-x), var(--move-y)) rotate(360deg) scale(0.95); 
+      }
     }
 
-    /* Level Cards: Transparent background & white text */
+    .main-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Typography & Headers */
+    h1, h2, h3, h4, .section-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .page-title {
+      font-size: 2.75rem;
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
+    }
+
+    /* Animated Section Divider */
+    .custom-divider {
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      margin: 3.5rem 0;
+    }
+
+    /* Level Cards */
     #list-container .card {
-      background-color: rgba(33, 37, 41, 0.2) !important;
-      color: #ffffff !important;
-      border: 1px solid rgba(255, 255, 255, 0.15) !important;
-      backdrop-filter: blur(4px);
+      background: var(--glass-bg) !important;
+      border: 1px solid var(--glass-border) !important;
+      border-radius: 16px !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    #list-container .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 242, 254, 0.4) !important;
+      box-shadow: 0 14px 35px var(--glass-glow);
     }
 
     #list-container .card * {
       color: #ffffff !important;
     }
 
-    /* Leaderboard Container: Light Translucent BG & Black Text */
+    /* Leaderboard Container */
     #leaderboard-container {
-      background-color: rgba(255, 255, 255, 0.85) !important;
-      border-radius: 8px;
-      padding: 20px;
-      backdrop-filter: blur(4px);
+      background: rgba(15, 20, 32, 0.75) !important;
+      border: 1px solid var(--glass-border) !important;
+      border-radius: 20px !important;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 
     #leaderboard-container, 
@@ -65,21 +135,47 @@
     #leaderboard-container th, 
     #leaderboard-container td, 
     #leaderboard-container * {
-      color: #000000 !important;
+      color: #e2e8f0 !important;
     }
 
-    /* View Records Popup / Modal Fixes */
+    #leaderboard-container table {
+      border-collapse: separate;
+      border-spacing: 0 8px;
+    }
+
+    #leaderboard-container tr {
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    #leaderboard-container tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    /* Modals & Popups */
     .modal-content {
-      background-color: #ffffff !important;
-      border-radius: 10px;
-      border: none;
+      background: rgba(18, 22, 31, 0.95) !important;
+      border: 1px solid var(--glass-border) !important;
+      border-radius: 20px !important;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
     }
 
-    .modal-header, .modal-body, .modal-footer {
-      background-color: #ffffff !important;
+    .modal-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      background: transparent !important;
+      padding: 1.25rem 1.5rem;
     }
 
-    /* Force all text inside modal to pure black */
+    .modal-body, .modal-footer {
+      background: transparent !important;
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    /* Force text inside modal to clean off-white for dark mode contrast */
     .modal-content,
     .modal-content *,
     .modal-content h1,
@@ -92,44 +188,66 @@
     .modal-content li,
     .modal-content span,
     .modal-content strong {
-      color: #000000 !important;
+      color: #f1f5f9 !important;
     }
 
-    /* Fix bootstrap list items in modal */
     .modal-content .list-group-item {
-      background-color: #f8f9fa !important;
-      border-color: #dee2e6 !important;
+      background-color: rgba(255, 255, 255, 0.04) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 10px !important;
+      margin-bottom: 8px;
     }
 
-    /* Keep Modal Close Button Visible */
     .modal-content .btn-close {
-      filter: none !important;
-      opacity: 0.8;
+      filter: invert(1) grayscale(100%) brightness(200%) !important;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-content .btn-close:hover {
+      opacity: 1;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple)) !important;
+      border: none !important;
+      color: #000000 !important;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 8px 18px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px var(--glass-glow);
     }
   </style>
 </head>
-<body class="text-white">
+<body>
 
-  <!-- Background layer for flying soggies -->
+  <!-- Floating Soggies Background -->
   <div id="soggy-container"></div>
 
-  <div class="container my-4">
-    <h1 class="text-center mb-4">GD Layout List</h1>
+  <div class="container my-5 main-wrapper">
+    <header class="text-center mb-5">
+      <h1 class="page-title text-uppercase">GD Layout List</h1>
+    </header>
+
     <div id="list-container"></div>
 
-    <hr class="my-5">
+    <hr class="custom-divider">
 
-    <h2 class="text-center mb-4">Player Leaderboards</h2>
-    <div id="leaderboard-container"></div>
+    <section>
+      <h2 class="text-center mb-4 page-title" style="font-size: 2.25rem;">Player Leaderboards</h2>
+      <div id="leaderboard-container"></div>
+    </section>
   </div>
 
-  <!-- Bootstrap 5 JavaScript Bundle (Crucial for closing modals) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Script loading list.js -->
   <script src="js/list.js"></script>
 
-  <!-- Script to spawn floating soggy images -->
   <script>
     function spawnSoggy() {
       const container = document.getElementById('soggy-container');
@@ -142,15 +260,15 @@
       img.style.left = `${startX}px`;
       img.style.top = `${startY}px`;
 
-      const opacity = (Math.random() * (0.70 - 0.20) + 0.20).toFixed(2);
+      const opacity = (Math.random() * (0.50 - 0.15) + 0.15).toFixed(2);
       img.style.opacity = opacity;
 
-      const moveX = (Math.random() - 0.5) * 1200 + 'px';
-      const moveY = (Math.random() - 0.5) * 1200 + 'px';
+      const moveX = (Math.random() - 0.5) * 1000 + 'px';
+      const moveY = (Math.random() - 0.5) * 1000 + 'px';
       img.style.setProperty('--move-x', moveX);
       img.style.setProperty('--move-y', moveY);
 
-      const duration = Math.random() * 8 + 6;
+      const duration = Math.random() * 10 + 8;
       img.style.animationDuration = `${duration}s`;
 
       container.appendChild(img);
