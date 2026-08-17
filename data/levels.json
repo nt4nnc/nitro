@@ -1,23 +1,16 @@
 [
   {
     "position": 1,
-    "name": "Shitty Sweeping Demon",
+    "name": "Superlovemeworld",
     "author": "NT",
     "verifier": "NT",
     "id": "118",
-    "youtube": "https://www.youtube.com/embed/EkJF9EZc598",
-    "records": [
-      {
-        "user": "Wousher",
-        "percent": 100,
-        "hz": "120Hz",
-        "link": "https://youtu.be/kQYK7ovR9NU"
-      }
-    ]
+    "youtube": "https://www.youtube.com/embed/PIqYOH3OLa4",
+    "records": []
   },
   {
     "position": 2,
-    "name": "Figures",
+    "name": "2",
     "author": "HelloEJ100",
     "verifier": "Wousher",
     "id": "117",
@@ -27,7 +20,7 @@
   },
   {
     "position": 3,
-    "name": "Glory",
+    "name": "3",
     "author": "snurby",
     "verifier": "Wousher",
     "id": "120",
