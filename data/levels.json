@@ -32,6 +32,13 @@
     "verifier": "Wousher",
     "id": "120",
     "youtube": "https://www.youtube.com/embed/Xau6iy4V97w",
-    "records": []
+    "records": [
+      {
+        "user": "Wousher",
+        "percent": 100,
+        "hz": "120Hz",
+        "link": "https://youtu.be/kQYK7ovR9NU"
+      }
+    ]
   }
 ]
