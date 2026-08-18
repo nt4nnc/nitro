@@ -89,7 +89,15 @@
       "id": "105",
       "hidden": false,
       "youtube": "https://www.youtube.com/embed/Kpi80fSsH_M",
-      "records": []
+      "records": [
+        {
+          "user": "Wousher",
+          "percent": 100,
+          "hz": "120Hz",
+          "link": "https://youtu.be/UGUhbzspFdo",
+          "hidden": false
+        }
+      ]
     },
     {
       "position": 3,
