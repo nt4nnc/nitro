@@ -1,7 +1,66 @@
 {
   "config": {
-    "hidden_levels": [],
-    "hidden_players": []
+    "hidden_levels": [
+      "202",
+      "203",
+      "204",
+      "205",
+      "206",
+      "207",
+      "208",
+      "209",
+      "210",
+      "211",
+      "212",
+      "213",
+      "214",
+      "215",
+      "216",
+      "217",
+      "218",
+      "219",
+      "220"
+    ],
+    "hidden_players": [
+      "Author 2",
+      "Author 3",
+      "Author 4",
+      "Author 5",
+      "Author 6",
+      "Author 7",
+      "Author 8",
+      "Author 9",
+      "Author 10",
+      "Author 11",
+      "Author 12",
+      "Author 13",
+      "Author 14",
+      "Author 15",
+      "Author 16",
+      "Author 17",
+      "Author 18",
+      "Author 19",
+      "Author 20",
+      "Verifier 2",
+      "Verifier 3",
+      "Verifier 4",
+      "Verifier 5",
+      "Verifier 6",
+      "Verifier 7",
+      "Verifier 8",
+      "Verifier 9",
+      "Verifier 10",
+      "Verifier 11",
+      "Verifier 12",
+      "Verifier 13",
+      "Verifier 14",
+      "Verifier 15",
+      "Verifier 16",
+      "Verifier 17",
+      "Verifier 18",
+      "Verifier 19",
+      "Verifier 20"
+    ]
   },
   "levels": [
     {
@@ -74,7 +133,7 @@
       "author": "Author 2",
       "verifier": "Verifier 2",
       "id": "202",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -84,7 +143,7 @@
       "author": "Author 3",
       "verifier": "Verifier 3",
       "id": "203",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -94,7 +153,7 @@
       "author": "Author 4",
       "verifier": "Verifier 4",
       "id": "204",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -104,7 +163,7 @@
       "author": "Author 5",
       "verifier": "Verifier 5",
       "id": "205",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -114,7 +173,7 @@
       "author": "Author 6",
       "verifier": "Verifier 6",
       "id": "206",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -124,7 +183,7 @@
       "author": "Author 7",
       "verifier": "Verifier 7",
       "id": "207",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -134,7 +193,7 @@
       "author": "Author 8",
       "verifier": "Verifier 8",
       "id": "208",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -144,7 +203,7 @@
       "author": "Author 9",
       "verifier": "Verifier 9",
       "id": "209",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -154,7 +213,7 @@
       "author": "Author 10",
       "verifier": "Verifier 10",
       "id": "210",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -164,7 +223,7 @@
       "author": "Author 11",
       "verifier": "Verifier 11",
       "id": "211",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -174,7 +233,7 @@
       "author": "Author 12",
       "verifier": "Verifier 12",
       "id": "212",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -184,7 +243,7 @@
       "author": "Author 13",
       "verifier": "Verifier 13",
       "id": "213",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -194,7 +253,7 @@
       "author": "Author 14",
       "verifier": "Verifier 14",
       "id": "214",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -204,7 +263,7 @@
       "author": "Author 15",
       "verifier": "Verifier 15",
       "id": "215",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -214,7 +273,7 @@
       "author": "Author 16",
       "verifier": "Verifier 16",
       "id": "216",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -224,7 +283,7 @@
       "author": "Author 17",
       "verifier": "Verifier 17",
       "id": "217",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -234,7 +293,7 @@
       "author": "Author 18",
       "verifier": "Verifier 18",
       "id": "218",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -244,7 +303,7 @@
       "author": "Author 19",
       "verifier": "Verifier 19",
       "id": "219",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     },
@@ -254,7 +313,7 @@
       "author": "Author 20",
       "verifier": "Verifier 20",
       "id": "220",
-      "hidden": false,
+      "hidden": true,
       "youtube": "https://www.youtube.com/embed/VIDEO_ID",
       "records": []
     }
