@@ -15,10 +15,40 @@ async function loadListData() {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    const levels = await response.json();
+    const data = await response.json();
 
-    renderList(levels);
-    renderLeaderboard(levels);
+    // Safely handle both flat array and nested object structures
+    let rawLevels = [];
+    let config = {};
+
+    if (Array.isArray(data)) {
+      rawLevels = data;
+    } else if (data && typeof data === 'object') {
+      rawLevels = data.levels || [];
+      config = data.config || {};
+    }
+
+    const hiddenLevelIds = new Set((config.hidden_levels || []).map(String));
+    const hiddenPlayers = new Set((config.hidden_players || []).map(p => p.toLowerCase()));
+
+    // Filter out hidden levels and hidden user records
+    const visibleLevels = rawLevels
+      .filter(level => {
+        if (level.hidden === true) return false;
+        if (hiddenLevelIds.has(String(level.id)) || hiddenLevelIds.has(String(level.position))) return false;
+        return true;
+      })
+      .map(level => {
+        const visibleRecords = (level.records || []).filter(record => {
+          if (record.hidden === true) return false;
+          if (record.user && hiddenPlayers.has(record.user.toLowerCase())) return false;
+          return true;
+        });
+        return { ...level, records: visibleRecords };
+      });
+
+    renderList(visibleLevels);
+    renderLeaderboard(visibleLevels, hiddenPlayers);
   } catch (err) {
     console.error("Error loading list data:", err);
     document.getElementById('list-container').innerHTML = 
@@ -102,7 +132,7 @@ function renderList(levels) {
   });
 }
 
-function renderLeaderboard(levels) {
+function renderLeaderboard(levels, hiddenPlayers) {
   const leaderboardContainer = document.getElementById('leaderboard-container');
   const players = {};
 
@@ -121,7 +151,8 @@ function renderLeaderboard(levels) {
       });
     }
 
-    if (level.verifier) {
+    // Ensure hidden players don't receive verifier points
+    if (level.verifier && !hiddenPlayers.has(level.verifier.toLowerCase())) {
       const alreadyHasRecord = level.records && level.records.some(r => r.user === level.verifier && r.percent === 100);
       if (!alreadyHasRecord) {
         if (!players[level.verifier]) {
