@@ -118,6 +118,13 @@
       "hidden": false,
       "youtube": "https://www.youtube.com/embed/r0z6wgcyPc?si=XoOEjiqDclT4rRbg",
       "records": [
+          {
+          "user": "Wousher",
+          "percent": 100,
+          "hz": "120Hz",
+          "link": "https://youtu.be/VkHqq6oBqTA",
+          "hidden": false
+        },
         {
           "user": "NT",
           "percent": 100,
